@@ -10,6 +10,7 @@ from pprint import pformat
 
 import yaml
 
+from matcher import Matcher
 
 def get_logger(name, level=None):
     level = level or logging.INFO
@@ -120,7 +121,13 @@ class DockerComposeDemoController(BaseDemoController):
         endpoints = [Endpoint(hostname=hostname) for hostname in data.get("endpoints", []) if valid_hostname(hostname)]
         self.healthy = {ep.hostname: ep for ep in endpoints}
 
+class KubernetesDemoController(BaseDemoController):
+
+    def update_healthy(self, label={u'app': 'helloworld'}):
+        m = Matcher(label)
+        endpoints = [Endpoint(ip=pod.status.pod_ip) for pod in m.pods]
+        self.healthy = {ep.hostname: ep for ep in endpoints}
 
 if __name__ == "__main__":
-    controller = DockerComposeDemoController()
+    controller = KubernetesDemoController()
     controller.update()

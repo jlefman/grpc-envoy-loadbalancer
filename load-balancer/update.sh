@@ -1,6 +1,6 @@
 #!/bin/bash
 cd /source/democontroller
-python3 controller.py
+PYTHONPATH=$PYTHONPATH:$PWD python3 controller.py
 if [ -e /config/new.yaml ]; then
    echo updating eds config
    cd /config

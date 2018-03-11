@@ -5,7 +5,7 @@ RUN apt-get update && apt-get -q install -y --no-install-recommends \
 
 RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install --upgrade setuptools && \
-    python3 -m pip install PyYAML
+    python3 -m pip install PyYAML kubernetes
 
 WORKDIR /source/democontroller
 COPY . .
